@@ -12,12 +12,10 @@ if(obj.frame < obj.track0) then
 	option_alpha = 0
 elseif(obj.frame < obj.track0 + transition_frame) then
 	option_alpha = 1-(obj.track0 + transition_frame - obj.frame) / transition_frame
-	debug_print(obj.track0 + transition_frame - obj.frame)
 elseif(obj.frame < obj.track1 + option_remove_delay) then
 	option_alpha = 1
 elseif(obj.frame < obj.track1 + option_remove_delay + transition_frame) then
 	option_alpha = (obj.track1 + transition_frame + option_remove_delay - obj.frame) / transition_frame
-	debug_print(obj.track1 + transition_frame - obj.frame)
 else
 	option_alpha = 0
 end
