@@ -1,8 +1,13 @@
 --  vim:ft=lua ff=dos fenc=sjis
---track0:flipstart,1,1000,100,1
---track1:flipend,1,10000,100,1
+--track0:flipstart,1,10000,400,1
+--track1:flipend,1,10000,5000,1
 --track2:スコア削除,1,1000,100,1
---check0:フレーム表示,0
+--track3:枠Y回転,-360,360,0,1
+--check0:フレーム数表示,0
+
+-- 枠Y回転を使う時は
+-- カメラ制御をかぶせた上でカメラ制御onにしないと
+-- 回転中にフィールドの裏に枠が隠れる
 
 transition_frame = 10
 option_alpha = 0
@@ -25,9 +30,10 @@ end
 function draw_frame()
 	obj.load("tempbuffer")
 	obj.effect("マスク","元のサイズに合わせる",1,"type",0,"マスクの反転",0,"name",'*J:\ongeki_mask.png')
-	obj.effect("回転","Z",270)
+	obj.effect("クリッピング","左",320)
+	obj.effect("回転","Y", obj.track3, "Z",270)
 	obj.effect("拡大率","拡大率",72)
-	obj.draw()
+	obj.draw(0,-100)
 end
 function draw_inner()
 	rotate_y = 0
@@ -44,30 +50,31 @@ function draw_inner()
 	end
 	obj.load("tempbuffer")
 	obj.effect("マスク","サイズ",100,"元のサイズに合わせる",1,"マスクの反転",1,"type",0,"name",'*J:\ongeki_mask.png')
+	obj.effect("クリッピング","左",320)
 	obj.effect("回転","Y", rotate_y, "Z",270)
 	obj.effect("拡大率","拡大率",72)
-	obj.draw()
+	obj.draw(0,-100)
 end
 
 function draw_score()
 	obj.load("tempbuffer")
-	obj.effect("クリッピング","下",820,"左",970,"右",710,"中心の位置を変更",1)
+	obj.effect("クリッピング","上",16,"下",820,"左",970,"右",710,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-620,20,0,1.7,option_alpha)
+	obj.draw(-640,40,0,2.0,option_alpha)
 end
 function draw_player()
 	obj.load("tempbuffer")
 	obj.effect("クリッピング","左",1000,"中心の位置を変更",1)
-	obj.effect("クリッピング","左",728,"下",524,"中心の位置を変更",1)
+	obj.effect("クリッピング","左",748,"下",524,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-620,-450,0,0.8)
+	obj.draw(-640,-460,0,0.90)
 end
 function draw_music()
 	obj.load("tempbuffer")
 	obj.effect("クリッピング","左",1000,"中心の位置を変更",1)
-	obj.effect("クリッピング","左",770,"上",786,"右",40,"中心の位置を変更",1)
+	obj.effect("クリッピング","左",770,"上",786,"右",50,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-620,-300,0,1.5,option_alpha)
+	obj.draw(-640,-300,0,1.7,option_alpha)
 end
 
 obj.setoption("drawtarget","tempbuffer",1920,1080)
