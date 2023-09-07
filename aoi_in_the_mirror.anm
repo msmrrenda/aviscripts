@@ -13,6 +13,8 @@ transition_frame = 10
 option_alpha = 0
 option_remove_delay = obj.track2
 
+mask_filename = "*" .. obj.getinfo("script_path") .. 'ongeki_mask.png'
+
 if(obj.frame < obj.track0) then
 	option_alpha = 0
 elseif(obj.frame < obj.track0 + transition_frame) then
@@ -29,7 +31,7 @@ end
 
 function draw_frame()
 	obj.load("tempbuffer")
-	obj.effect("マスク","元のサイズに合わせる",1,"type",0,"マスクの反転",0,"name",'*J:\ongeki_mask.png')
+	obj.effect("マスク","元のサイズに合わせる",1,"type",0,"マスクの反転",0,"name", mask_filename)
 	obj.effect("クリッピング","左",320)
 	obj.effect("回転","Y", obj.track3, "Z",270)
 	obj.effect("拡大率","拡大率",72)
@@ -49,7 +51,7 @@ function draw_inner()
 		rotate_y = 0
 	end
 	obj.load("tempbuffer")
-	obj.effect("マスク","サイズ",100,"元のサイズに合わせる",1,"マスクの反転",1,"type",0,"name",'*J:\ongeki_mask.png')
+	obj.effect("マスク","サイズ",100,"元のサイズに合わせる",1,"マスクの反転",1,"type",0,"name", mask_filename)
 	obj.effect("クリッピング","左",320)
 	obj.effect("回転","Y", rotate_y, "Z",270)
 	obj.effect("拡大率","拡大率",72)
