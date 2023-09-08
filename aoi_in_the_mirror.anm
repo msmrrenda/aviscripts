@@ -3,7 +3,6 @@
 --track1:flipend,1,10000,5000,1
 --track2:スコア削除,1,1000,100,1
 --track3:枠Y回転,-360,360,0,1
---check0:フレーム数表示,0
 
 -- 枠Y回転を使う時は
 -- カメラ制御をかぶせた上でカメラ制御onにしないと
@@ -81,6 +80,7 @@ end
 
 obj.setoption("drawtarget","tempbuffer",1920,1080)
 obj.draw()
+
 obj.setoption("drawtarget","framebuffer")
 
 draw_frame()
@@ -89,8 +89,6 @@ draw_score()
 draw_player()
 draw_music()
 
-if( obj.check0 and not obj.getinfo("saving")) then
-obj.load("text",tostring(obj.frame))
-obj.setfont("Meiryo",64,0,0xffffff)
-obj.draw()
-end
+-- なぜか直接 text を作って draw すると PSDtoolkit と干渉するので
+-- 一旦変数に入れてテキストの mes で表示する・・・
+rndnet_mirror_current_frame = obj.frame
