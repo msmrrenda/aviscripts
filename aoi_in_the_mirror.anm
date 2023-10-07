@@ -11,6 +11,7 @@
 transition_frame = 10
 option_alpha = 0
 option_remove_delay = obj.track2
+xoffset = -60
 
 mask_filename = "*" .. obj.getinfo("script_path") .. 'ongeki_mask.png'
 
@@ -34,18 +35,18 @@ function draw_frame()
 	obj.effect("クリッピング","左",320)
 	obj.effect("回転","Y", obj.track3, "Z",270)
 	obj.effect("拡大率","拡大率",72)
-	obj.draw(0,-100)
+	obj.draw(xoffset,-100)
 end
 function draw_inner()
 	rotate_y = 0
 	if(obj.frame < obj.track0) then
 		rotate_y = 0
 	elseif(obj.frame < obj.track0 + transition_frame) then
-		rotate_y = (obj.track0 + transition_frame - obj.frame) * (180/transition_frame)
+		rotate_y = 180 - (obj.track0 + transition_frame - obj.frame) * (180/transition_frame)
 	elseif(obj.frame < obj.track1) then
 		rotate_y = 180
 	elseif(obj.frame < obj.track1 + transition_frame) then
-		rotate_y = 180 - (obj.track1 + transition_frame - obj.frame) * (180/transition_frame)
+		rotate_y = (obj.track1 + transition_frame - obj.frame) * (180/transition_frame)
 	else
 		rotate_y = 0
 	end
@@ -54,28 +55,28 @@ function draw_inner()
 	obj.effect("クリッピング","左",320)
 	obj.effect("回転","Y", rotate_y, "Z",270)
 	obj.effect("拡大率","拡大率",72)
-	obj.draw(0,-100)
+	obj.draw(xoffset,-100)
 end
 
 function draw_score()
 	obj.load("tempbuffer")
 	obj.effect("クリッピング","上",16,"下",820,"左",970,"右",710,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-640,40,0,2.0,option_alpha)
+	obj.draw(-640 + xoffset,40,0,2.0,option_alpha)
 end
 function draw_player()
 	obj.load("tempbuffer")
 	obj.effect("クリッピング","左",1000,"中心の位置を変更",1)
 	obj.effect("クリッピング","左",748,"下",524,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-640,-460,0,0.90)
+	obj.draw(-640 + xoffset,-460,0,0.90)
 end
 function draw_music()
 	obj.load("tempbuffer")
 	obj.effect("クリッピング","左",1000,"中心の位置を変更",1)
 	obj.effect("クリッピング","左",770,"上",786,"右",50,"中心の位置を変更",1)
 	obj.effect("回転", "Z",270)
-	obj.draw(-640,-300,0,1.7,option_alpha)
+	obj.draw(-640 + xoffset,-300,0,1.7,option_alpha)
 end
 
 obj.setoption("drawtarget","tempbuffer",1920,1080)
